@@ -1,7 +1,16 @@
 const http = require("http")
-//createServer accepet un callback qui a comme paramètre la requete et la réponse
-const server = http.createServer((req, res) => {
-  res.end("Voilà la réponse du serveur !")
+const app = require("./app")
+/*
+  app.set('port', 8080) is similar to setting a "variable" named 
+  port to 8080, which you can access later on using app.get('port')
+*/
+const port = process.env.PORT || 5000
+app.set("port", port)
+const server = http.createServer(app)
+server.on("listening", () => {
+  const address = server.address()
+  console.log(address)
+  const bind = typeof address === "string" ? "pipe " + address : "port " + port
+  console.log("Listening on " + bind)
 })
-// si pas de variable d'environnement PORT, on va écouter le port 5000
-server.listen(process.env.PORT || 5000)
+server.listen(port)
