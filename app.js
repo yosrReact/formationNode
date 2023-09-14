@@ -1,5 +1,12 @@
 const express = require("express")
-
+const mongoose = require("mongoose")
+mongoose
+  .connect(
+    "mongodb+srv://yosrnaija:atlas123456@clustertraining.9mnhiji.mongodb.net/tasks",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log("Connexion à MongoDB réussie !"))
+  .catch(() => console.log("Connexion à MongoDB échouée !"))
 const app = express()
 
 /*
