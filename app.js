@@ -1,9 +1,13 @@
 const express = require("express")
 
 const app = express()
-// app.use((req, res) => {
-//   res.json({ message: "Votre requête a bien été reçue !" })
-// })
+
+/*
+Avec ceci, Express prend toutes les requêtes qui ont comme Content-Type  application/json 
+et met à disposition leur  body  directement sur l'objet req, 
+ce qui nous permet d'écrire le middleware POST
+*/
+app.use(express.json())
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
@@ -17,9 +21,11 @@ app.use((req, res, next) => {
   )
   next()
 })
-
-app.use("/api/todos/", (req, res, next) => {
-  const todos = [
+/*remplacer use car car la logique GET interceptera 
+ actuellement toutes les requêtes envoyées à votre endpoint 
+ */
+app.get("/api/tasks/", (req, res) => {
+  const tasks = [
     {
       _id: "1",
       title: "learn js",
@@ -36,7 +42,17 @@ app.use("/api/todos/", (req, res, next) => {
       duration: "60",
     },
   ]
-  res.status(200).json(todos)
+  res.status(200).json(tasks)
 })
 
+app.post("/api/tasks", (req, res) => {
+  console.log(req.body)
+  delete req.body._id
+  const _id = Math.random() + ""
+
+  res.status(201).json({
+    model: { _id, ...req.body },
+    message: "Objet créé !",
+  })
+})
 module.exports = app
