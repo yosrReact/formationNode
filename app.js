@@ -18,7 +18,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use("/api/todos/", (req, res, next) => {
+app.use("/api/tasks", (req, res, next) => {
   const todos = [
     {
       _id: "1",
