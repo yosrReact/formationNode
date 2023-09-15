@@ -99,4 +99,30 @@ app.get("/api/tasks/:id", (req, res) => {
     )
     .catch((error) => res.status(404).json({ error }))
 })
+
+app.patch("/api/tasks/:id", (req, res) => {
+  console.log(req.params.id)
+  console.log(req.body)
+  delete req.body._id
+
+  //updateOne ne retourne pas l'objet modfié
+  // Task.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+  //   .then((response) =>
+  //     res.status(200).json({
+  //       response,
+  //       message: "Objet modifié",
+  //     })
+  //   )
+  //   .catch((error) => res.status(400).json({ error }))
+
+  Task.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+    .then((task) =>
+      res.status(200).json({
+        task,
+        message: "Objet modifié",
+      })
+    )
+    .catch((error) => res.status(400).json({ error }))
+})
+
 module.exports = app
