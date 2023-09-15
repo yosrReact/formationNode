@@ -116,12 +116,18 @@ app.patch("/api/tasks/:id", (req, res) => {
   //   .catch((error) => res.status(400).json({ error }))
 
   Task.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
-    .then((task) =>
+    .then((task) => {
+      if (!task) {
+        res.status(404).json({
+          message: "Objet non trouvé",
+        })
+        return
+      }
       res.status(200).json({
         task,
         message: "Objet modifié",
       })
-    )
+    })
     .catch((error) => res.status(400).json({ error }))
 })
 
