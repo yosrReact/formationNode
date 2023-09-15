@@ -91,12 +91,18 @@ app.get("/api/tasks/:id", (req, res) => {
   // nous pouvons rechercher par n'importe quel champ du schema (ex.title) ou une combinaison de ces champs
   // le plus important est que la condition de recherche a soit sous forme d'objet
   Task.findOne({ _id: req.params.id })
-    .then((task) =>
+    .then((task) => {
+      if (!task) {
+        res.status(404).json({
+          message: "Objet non trouvé",
+        })
+        return
+      }
       res.status(200).json({
         task,
         message: "Objet trouvé",
       })
-    )
+    })
     .catch((error) => res.status(404).json({ error }))
 })
 
@@ -116,12 +122,18 @@ app.patch("/api/tasks/:id", (req, res) => {
   //   .catch((error) => res.status(400).json({ error }))
 
   Task.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
-    .then((task) =>
+    .then((task) => {
+      if (!task) {
+        res.status(404).json({
+          message: "Objet non trouvé",
+        })
+        return
+      }
       res.status(200).json({
         task,
         message: "Objet modifié",
       })
-    )
+    })
     .catch((error) => res.status(400).json({ error }))
 })
 
