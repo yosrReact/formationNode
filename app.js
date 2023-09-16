@@ -32,6 +32,7 @@ app.use((req, res, next) => {
   )
   next()
 })
+
 app.use("/api/tasks/", taskRoutes)
 app.use("/api/auth/", userRoutes)
 
