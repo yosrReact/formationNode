@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const taskRoutes = require("./routes/task")
+const userRoutes = require("./routes/user")
 
 //?retryWrites=true&w=majority
 mongoose
@@ -32,5 +33,6 @@ app.use((req, res, next) => {
   next()
 })
 app.use("/api/tasks/", taskRoutes)
+app.use("/api/auth/", userRoutes)
 
 module.exports = app
