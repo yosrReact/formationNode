@@ -30,33 +30,12 @@ app.use((req, res, next) => {
   )
   next()
 })
-/*remplacer use car car la logique GET interceptera 
- actuellement toutes les requêtes envoyées à votre endpoint 
- */
 app.get("/api/tasks/", (req, res) => {
-  //   const tasks = [
-  //     {
-  //       _id: "1",
-  //       title: "learn js",
-  //       duration: "30",
-  //     },
-  //     {
-  //       _id: "2",
-  //       title: "learn nodeJS",
-  //       duration: "40",
-  //     },
-  //     {
-  //       _id: "3",
-  //       title: "learn react",
-  //       duration: "60",
-  //     },
-  //   ]
-  // res.status(200).json(tasks)
   Task.find()
     .then((tasks) => res.status(200).json(tasks))
     .catch((error) =>
       res.status(400).json({
-        error,
+        error: error.message,
         message: "problème d'extraction",
       })
     )
@@ -65,26 +44,21 @@ app.get("/api/tasks/", (req, res) => {
 app.post("/api/tasks", (req, res) => {
   console.log(req.body)
   delete req.body._id
-  // const _id = Math.random() + ""
-  const task = new Task({ ...req.body })
-  // res.status(201).json({
-  //   model: { _id, ...req.body },
-  //   message: "Objet créé !",
-  // })
+  const task = new Task(req.body)
   task
     .save()
-    .then(() =>
+    .then(() => {
       res.status(201).json({
         model: task,
         message: "Objet créé !",
       })
-    )
-    .catch((error) =>
+    })
+    .catch((error) => {
       res.status(400).json({
-        error,
+        error: error.message,
         message: "Données invalides",
       })
-    )
+    })
 })
 
 app.get("/api/tasks/:id", (req, res) => {
@@ -96,14 +70,14 @@ app.get("/api/tasks/:id", (req, res) => {
         res.status(404).json({
           message: "Objet non trouvé",
         })
-        return
+      } else {
+        res.status(200).json({
+          task,
+          message: "Objet trouvé",
+        })
       }
-      res.status(200).json({
-        task,
-        message: "Objet trouvé",
-      })
     })
-    .catch((error) => res.status(404).json({ error }))
+    .catch((error) => res.status(404).json({ error: error.message }))
 })
 
 app.patch("/api/tasks/:id", (req, res) => {
@@ -127,14 +101,14 @@ app.patch("/api/tasks/:id", (req, res) => {
         res.status(404).json({
           message: "Objet non trouvé",
         })
-        return
+      } else {
+        res.status(200).json({
+          task,
+          message: "Objet modifié",
+        })
       }
-      res.status(200).json({
-        task,
-        message: "Objet modifié",
-      })
     })
-    .catch((error) => res.status(400).json({ error }))
+    .catch((error) => res.status(400).json({ error: error.message }))
 })
 
 module.exports = app
