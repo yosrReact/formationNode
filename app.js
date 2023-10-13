@@ -114,7 +114,7 @@ app.patch("/api/tasks/:id", (req, res) => {
 app.delete("/api/tasks/:id", (req, res) => {
   Task.deleteOne({ _id: req.params.id })
     .then(() => res.status(200).json({ message: "Objet supprimé !" }))
-    .catch((error) => res.status(400).json({ error }))
+    .catch((error) => res.status(400).json({ error: error.message }))
 })
 
 module.exports = app
