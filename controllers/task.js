@@ -2,10 +2,15 @@ const Task = require("../models/task")
 
 const fetchTasks = (req, res) => {
   Task.find()
-    .then((tasks) => res.status(200).json(tasks))
+    .then((tasks) =>
+      res.status(200).json({
+        model: tasks,
+        message: "success",
+      })
+    )
     .catch((error) =>
       res.status(400).json({
-        error,
+        error: error.message,
         message: "problème d'extraction",
       })
     )
@@ -24,7 +29,7 @@ const addTask = (req, res) => {
     )
     .catch((error) =>
       res.status(400).json({
-        error,
+        error: error.message,
         message: "Données invalides",
       })
     )
@@ -40,11 +45,11 @@ const getTaskById = (req, res) => {
         return
       }
       res.status(200).json({
-        task,
+        model: task,
         message: "Objet trouvé",
       })
     })
-    .catch((error) => res.status(404).json({ error }))
+    .catch((error) => res.status(404).json({ error: error.message }))
 }
 
 const updateTask = (req, res) => {
@@ -61,17 +66,17 @@ const updateTask = (req, res) => {
         return
       }
       res.status(200).json({
-        task,
+        model: task,
         message: "Objet modifié",
       })
     })
-    .catch((error) => res.status(400).json({ error }))
+    .catch((error) => res.status(400).json({ error: error.message }))
 }
 
 const deleteTask = (req, res) => {
   Task.deleteOne({ _id: req.params.id })
     .then(() => res.status(200).json({ message: "Objet supprimé !" }))
-    .catch((error) => res.status(400).json({ error }))
+    .catch((error) => res.status(400).json({ error: error.message }))
 }
 
 module.exports = {
