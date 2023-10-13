@@ -32,18 +32,18 @@ app.use((req, res, next) => {
 })
 app.get("/api/tasks/", (req, res) => {
   Task.find()
-    .then((tasks) => res.status(200).json(tasks))
-    .catch((error) =>
+    .then((tasks) => {
+      res.status(200).json({ model: tasks, message: "success" })
+    })
+    .catch((error) => {
       res.status(400).json({
         error: error.message,
         message: "problème d'extraction",
       })
-    )
+    })
 })
 //the __v field increments by one only when an array is updated. In other situations, the value of the __v field remains unaffected
 app.post("/api/tasks", (req, res) => {
-  console.log(req.body)
-  delete req.body._id
   const task = new Task(req.body)
   task
     .save()
@@ -55,12 +55,11 @@ app.post("/api/tasks", (req, res) => {
     })
     .catch((error) => {
       res.status(400).json({
-        error: error.message,
+        error: error.errors,
         message: "Données invalides",
       })
     })
 })
-
 app.get("/api/tasks/:id", (req, res) => {
   // nous pouvons rechercher par n'importe quel champ du schema (ex.title) ou une combinaison de ces champs
   // le plus important est que la condition de recherche a soit sous forme d'objet
@@ -72,7 +71,7 @@ app.get("/api/tasks/:id", (req, res) => {
         })
       } else {
         res.status(200).json({
-          task,
+          model: task,
           message: "Objet trouvé",
         })
       }
@@ -81,20 +80,6 @@ app.get("/api/tasks/:id", (req, res) => {
 })
 
 app.patch("/api/tasks/:id", (req, res) => {
-  console.log(req.params.id)
-  console.log(req.body)
-  delete req.body._id
-
-  //updateOne ne retourne pas l'objet modfié
-  // Task.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-  //   .then((response) =>
-  //     res.status(200).json({
-  //       response,
-  //       message: "Objet modifié",
-  //     })
-  //   )
-  //   .catch((error) => res.status(400).json({ error }))
-
   Task.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
     .then((task) => {
       if (!task) {
@@ -103,7 +88,7 @@ app.patch("/api/tasks/:id", (req, res) => {
         })
       } else {
         res.status(200).json({
-          task,
+          model: task,
           message: "Objet modifié",
         })
       }
