@@ -5,6 +5,8 @@ const app = express()
 //   res.json({ message: "Votre requête a bien été reçue !" })
 // })
 
+/* on peut aussi installer le package "cors"  et faire app.use("cors") */
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader(
