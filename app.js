@@ -26,34 +26,15 @@ app.use((req, res, next) => {
 /*remplacer use car car la logique GET interceptera 
  actuellement toutes les requêtes envoyées à votre endpoint 
  */
-app.get("/api/tasks/", (req, res) => {
-  const tasks = [
-    {
-      _id: "1",
-      title: "learn js",
-      duration: "30",
-    },
-    {
-      _id: "2",
-      title: "learn nodeJS",
-      duration: "40",
-    },
-    {
-      _id: "3",
-      title: "learn react",
-      duration: "60",
-    },
-  ]
-  res.status(200).json(tasks)
+app.use("/api/tasks", (req, res, next) => {
+  console.log("fetch tasks")
+  res.status(200).json({ message: "succès" })
 })
 
 app.post("/api/tasks", (req, res) => {
   console.log(req.body)
-  delete req.body._id
-  const _id = Math.random() + ""
 
   res.status(201).json({
-    model: { _id, ...req.body },
     message: "Objet créé !",
   })
 })
