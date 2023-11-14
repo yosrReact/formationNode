@@ -1,4 +1,6 @@
 const express = require("express")
+const cors = require("cors")
+
 const mongoose = require("mongoose")
 const taskRoutes = require("./routes/task")
 const userRoutes = require("./routes/user")
@@ -32,6 +34,8 @@ app.use((req, res, next) => {
   )
   next()
 })
+
+// app.use(cors())
 
 app.use("/api/tasks/", taskRoutes)
 app.use("/api/auth/", userRoutes)

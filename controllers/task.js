@@ -2,7 +2,12 @@ const Task = require("../models/task")
 
 const fetchTasks = (req, res) => {
   Task.find()
-    .then((tasks) => res.status(200).json(tasks))
+    .then((tasks) =>
+      res.status(200).json({
+        model: tasks,
+        message: "succès",
+      })
+    )
     .catch((error) =>
       res.status(400).json({
         error,
@@ -40,7 +45,7 @@ const getTaskById = (req, res) => {
         return
       }
       res.status(200).json({
-        task,
+        model: task,
         message: "Objet trouvé",
       })
     })
@@ -61,7 +66,7 @@ const updateTask = (req, res) => {
         return
       }
       res.status(200).json({
-        task,
+        model: task,
         message: "Objet modifié",
       })
     })
