@@ -7,7 +7,7 @@ exports.signup = (req, res, next) => {
     .hash(req.body.password, 10)
     .then((hash) => {
       const user = new User({
-        email: req.body.email,
+        ...req.body,
         password: hash,
       })
       user
@@ -18,7 +18,7 @@ exports.signup = (req, res, next) => {
           const newUser = response.toObject()
           delete newUser.password
           res.status(201).json({
-            user: newUser,
+            model: newUser,
             message: "Utilisateur créé !",
           })
         })
