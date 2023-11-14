@@ -18,7 +18,7 @@ exports.signup = (req, res, next) => {
           const newUser = response.toObject()
           delete newUser.password
           res.status(201).json({
-            user: newUser,
+            model: newUser,
             message: "Utilisateur créé !",
           })
         })
