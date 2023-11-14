@@ -5,7 +5,7 @@ const fetchTasks = (req, res) => {
     .then((tasks) =>
       res.status(200).json({
         model: tasks,
-        message: "success",
+        message: "succès",
       })
     )
     .catch((error) =>
