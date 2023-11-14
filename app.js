@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 app.get("/api/tasks/", (req, res) => {
   Task.find()
     .then((tasks) => {
-      res.status(200).json({ model: tasks, message: "success" })
+      res.status(200).json({ model: tasks, message: "succès" })
     })
     .catch((error) => {
       res.status(400).json({
@@ -55,7 +55,7 @@ app.post("/api/tasks", (req, res) => {
     })
     .catch((error) => {
       res.status(400).json({
-        error: error.errors,
+        error: error.message,
         message: "Données invalides",
       })
     })
