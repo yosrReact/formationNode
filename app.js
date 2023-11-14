@@ -21,24 +21,8 @@ app.use((req, res, next) => {
 })
 
 app.use("/api/tasks", (req, res, next) => {
-  const todos = [
-    {
-      _id: "1",
-      title: "learn js",
-      duration: "30",
-    },
-    {
-      _id: "2",
-      title: "learn nodeJS",
-      duration: "40",
-    },
-    {
-      _id: "3",
-      title: "learn react",
-      duration: "60",
-    },
-  ]
-  res.status(200).json(todos)
+  console.log("fetch tasks")
+  res.status(200).json({ message: "succès" })
 })
 
 module.exports = app
