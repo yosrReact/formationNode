@@ -1,9 +1,3 @@
-//*       401:
-// *         $ref: '#/components/responses/401'
-
-// *                  items:
-//*                      $ref: '#/components/schemas/Task'
-
 const express = require("express")
 
 const router = express.Router()
@@ -21,7 +15,7 @@ const auth = require("../middleware/auth")
  * @swagger
  * components:
  *   schemas:
- *     newTask:
+ *     NewTask:
  *       type: object
  *       required:
  *         - title
@@ -47,11 +41,8 @@ const auth = require("../middleware/auth")
  *                  _id:
  *                      type: string
  *                      description: The auto-generated id of the task
- *              - $ref: '#/components/schemas/newTask'
+ *              - $ref: '#/components/schemas/NewTask'
  */
-//to disable security :  security: []
-// #*     security:
-//*          - bearerAuth: []
 
 /**
  * @swagger
@@ -59,34 +50,20 @@ const auth = require("../middleware/auth")
  *   get:
  *     summary: List all the tasks
  *     tags: [Tasks]
+ #*     security: []
+ #*     security:
+ #*          - bearerAuth: []
  *     responses:
  *       200:
- *         description: Success
+ *         $ref: '#/components/responses/200'
  *         content:
  *           application/json:
  *              schema:
  *                  type: array
  *                  items:
- *                      type: object
- *                      properties:
- *                          _id:
- *                              type: string
- *                              description: The auto-generated id of the task
- *                              example: 1dzf5f5jbjv5555
- *                          title:
- *                              type: string
- *                              description: The title of your task
- *                              example: learn react
- *                          duration:
- *                              type: string
- *                              description: The task duration
- *                              example: 150,
- *                          description:
- *                              type: string
- *                              description: The task description
- *                              example: learn the fundamentals of react
- *       500:
- *         description: Some server error
+ *                      $ref: '#/components/schemas/Task'
+ *       401:
+ *         $ref: '#/components/responses/401'
  */
 router.get("/", taskController.fetchTasks)
 // router.get("/", auth.loggedMiddleware, auth.isAdmin, taskController.fetchTasks)
@@ -101,46 +78,14 @@ router.get("/", taskController.fetchTasks)
  *       content:
  *         application/json:
  *           schema:
- *              type: object
- *              properties:
- *                  title:
- *                      type: string
- *                      required: true
- *                      description: The task title
- *                      example: learn react
- *                  duration:
- *                      type: string
- *                      required: true
- *                      description: The task duration
- *                      example: 150,
- *                  description:
- *                      type: string
- *                      description: The task description
- *                      example: learn the fundamentals of react
+ *              $ref: '#/components/schemas/NewTask'
  *     responses:
  *       200:
  *         description: Success
  *         content:
  *           application/json:
- *             schema:
- *              type: object
- *              properties:
- *                  _id:
- *                      type: string
- *                      description: The auto-generated id of the task
- *                      example: 1dzf5f5jbjv5555
- *                  title:
- *                      type: string
- *                      description: The title of your task
- *                      example: learn react
- *                  duration:
- *                      type: string
- *                      description: The task duration
- *                      example: 150,
- *                  description:
- *                      type: string
- *                      description: The task description
- *                      example: learn the fundamentals of react
+ *              schema:
+ *                  $ref: '#/components/schemas/Task'
  *       400:
  *         description: Bad request. You may need to verify your information.
  *       500:
@@ -169,24 +114,7 @@ router.post("/", taskController.addTask)
  *         content:
  *           application/json:
  *             schema:
- *              type: object
- *              properties:
- *                  _id:
- *                      type: string
- *                      description: The auto-generated id of the task
- *                      example: 1dzf5f5jbjv5555
- *                  title:
- *                      type: string
- *                      description: The title of your task
- *                      example: learn react
- *                  duration:
- *                      type: string
- *                      description: The task duration
- *                      example: 150,
- *                  description:
- *                      type: string
- *                      description: The task description
- *                      example: learn the fundamentals of react
+ *                  $ref: '#/components/schemas/Task'
  *       404:
  *         description: Object not found
  *       500:
