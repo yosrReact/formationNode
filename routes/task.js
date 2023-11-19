@@ -121,7 +121,8 @@ router.post("/", taskController.addTask)
  *         description: Some server error
  *
  */
-router.get("/:id", auth.loggedMiddleware, taskController.getTaskById)
+router.get("/:id", taskController.getTaskById)
+// router.get("/:id", auth.loggedMiddleware, taskController.getTaskById)
 
 router.patch("/:id", auth.loggedMiddleware, taskController.updateTask)
 
