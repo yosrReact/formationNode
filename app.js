@@ -6,10 +6,10 @@ const swaggerJsdoc = require("swagger-jsdoc")
 const swaggerUi = require("swagger-ui-express")
 //?retryWrites=true&w=majority
 mongoose
-  .connect(
-    "mongodb+srv://yosrnaija:atlas123456@clustertraining.9mnhiji.mongodb.net/training",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"))
 const app = express()

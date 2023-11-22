@@ -44,12 +44,12 @@ exports.login = (req, res, next) => {
               .json({ message: "Login ou mot de passe incorrecte" })
           }
           res.status(200).json({
-            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
-              expiresIn: "24h",
+            token: jwt.sign({ userId: user._id }, process.env.SECRET_TOKEN, {
+              expiresIn: process.env.EXPIRES_IN,
             }),
           })
         })
-        .catch((error) => res.status(500).json({ error }))
+        .catch((error) => res.status(500).json({ error: error.message }))
     })
-    .catch((error) => res.status(500).json({ error }))
+    .catch((error) => res.status(500).json({ error: error.message + "ddd" }))
 }

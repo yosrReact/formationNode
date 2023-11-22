@@ -1,9 +1,7 @@
 const http = require("http")
+require("dotenv-flow").config()
 const app = require("./app")
-/*
-  app.set('port', 8080) is similar to setting a "variable" named 
-  port to 8080, which you can access later on using app.get('port')
-*/
+console.log(process.env.NODE_ENV, process.env.PORT)
 const port = process.env.PORT || 5000
 app.set("port", port)
 const server = http.createServer(app)
