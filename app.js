@@ -40,7 +40,7 @@ const options = {
       contact: {
         name: "Yosr Naija",
         url: "https://www.linkedin.com/in/yosrnaija/",
-        email: "yosr.naija@igmail.com",
+        email: "yosr.naija@gmail.com",
       },
     },
     servers: [
@@ -94,9 +94,7 @@ const options = {
 //     // ],
 //   },
 // }
-
 const specs = swaggerJsdoc(options)
-
 app.use(
   "/api-docs",
   swaggerUi.serve,
