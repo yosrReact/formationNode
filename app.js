@@ -22,5 +22,6 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   console.log("Réponse envoyée avec succès !")
+  res.status(201).json({ message: "Votre requête a bien été reçue !" })
 })
 module.exports = app
