@@ -1,4 +1,5 @@
 #clone the repository
+\n
 #git branch -r to have remote branches
 #checkout to one of the esisting branches
 
